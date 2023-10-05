@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               controller: searchController,
               decoration: InputDecoration(
-                // enabledBorder: const OutlineInputBorder(),
+                enabledBorder: const OutlineInputBorder(),
                 border: const OutlineInputBorder(),
                 hintText: 'Search for animals',
                 suffixIcon: IconButton(
@@ -122,39 +122,51 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-          Expanded(
-            child: NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo is ScrollEndNotification &&
-                    scrollInfo.metrics.pixels ==
-                        scrollInfo.metrics.maxScrollExtent) {
-                  if (hasMore) {
-                    page++;
-                    fetchImages(searchController.text, page);
-                  }
-                }
-                return true;
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 1,
-                    crossAxisCount: 2,
+          images.isEmpty
+              ? const Padding(
+                  padding: EdgeInsets.only(top: 40.0),
+                  child: Text(
+                    "Serach for Image",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                   ),
-                  itemCount: images.length,
-                  itemBuilder: (context, index) {
-                    return Image.network(
-                      images[index],
-                      fit: BoxFit.cover,
-                    );
-                  },
+                )
+              : Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollInfo) {
+                      if (scrollInfo is ScrollEndNotification &&
+                          scrollInfo.metrics.pixels ==
+                              scrollInfo.metrics.maxScrollExtent) {
+                        if (hasMore) {
+                          page++;
+                          fetchImages(searchController.text, page);
+                        }
+                      }
+                      return true;
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          childAspectRatio: 1,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: images.length,
+                        itemBuilder: (context, index) {
+                          return Image.network(
+                            images[index],
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           isLoading
               ? const Padding(
                   padding: EdgeInsets.all(8.0),
