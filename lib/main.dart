@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 5,
                           childAspectRatio: 1,
-                          crossAxisCount: 2,
+                          crossAxisCount: 3,
                         ),
                         itemCount: images.length,
                         itemBuilder: (context, index) {
