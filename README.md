@@ -1,4 +1,4 @@
-# Google_clone
+# Animila
 
 A completely Responsive App- Works on Android, iOS & Web!
 
